@@ -1,4 +1,4 @@
-#include "hashtable.h"
+#include "include/hashtable.h"
 
 uint32_t lookup3 ( const void *key, size_t length, uint32_t initval) {
     uint32_t  a,b,c;

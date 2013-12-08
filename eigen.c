@@ -1,4 +1,4 @@
-#include "eigen.h"
+#include "include/eigen.h"
 
 void eig_cent(float** eig, int** A, int m){
     int i, j;

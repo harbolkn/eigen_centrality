@@ -1,4 +1,4 @@
-#include "graph.h"
+#include "include/graph.h"
 
 int graph_size(FILE* fp, char* file_name){
     fp = fopen(file_name, "r");

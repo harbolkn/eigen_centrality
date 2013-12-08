@@ -1,4 +1,4 @@
-#include "tree.h"
+#include "include/tree.h"
 
 Tree* Tree_init(Tree* root, char** name, int opt){
 	Tree* parent = NULL;
