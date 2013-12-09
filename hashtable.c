@@ -1,5 +1,11 @@
 #include "include/hashtable.h"
 
+/*****
+*   Lookup3
+*
+*   Hash function for strings
+*   Returns the table address for the value
+*/
 uint32_t lookup3 ( const void *key, size_t length, uint32_t initval) {
     uint32_t  a,b,c;
     const uint8_t  *k;
@@ -37,6 +43,13 @@ uint32_t lookup3 ( const void *key, size_t length, uint32_t initval) {
     return c;
 }
 
+
+/*****
+*   Hash Function Caller
+*
+*   Given a string, calls lookup3 to hash word
+*   Returns reference value for hash
+*/
 unsigned int string_hash(char* word){
     unsigned int initval;
     unsigned int hashAddress;

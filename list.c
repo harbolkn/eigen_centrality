@@ -8,6 +8,8 @@
 node* get_node(){
     node* new = (node*)malloc(sizeof(node));
 
+    new->root = NULL;
+    new->next = NULL;
     return new;
 }
 
@@ -23,13 +25,9 @@ void fill_node(node* fill, char** name){
 
     //UID
     char* temp = (char*)malloc(sizeof(char)*2*MAX_WORD);
-    temp = fill->name[0];
+    strncpy(temp, fill->name[0], strlen(fill->name[0]));
     strcat(temp, fill->name[1]);
     fill->uid = string_hash(temp);
-
-    // Pointers
-    fill->root = NULL;
-    fill->next = NULL;
 }
 
 /*****
@@ -106,8 +104,9 @@ node* search(node* head, char** name, node** parent){
     }
 
     node* temp = head;
+
     char* name_t = (char*)malloc(sizeof(char)*2*MAX_WORD);
-    name_t = name[0];
+    strncpy(name_t, name[0], strlen(name[0]));
     strcat(name_t, name[1]);
 
     int uid = string_hash(name_t);
@@ -120,7 +119,6 @@ node* search(node* head, char** name, node** parent){
         temp = temp->next;
     }
 
-    printf("Not Found\n");
     return NULL;
 }
 

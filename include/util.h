@@ -9,8 +9,8 @@
 #include "eigen.h"
 
 #define END golf 
-#define MENU "\n0)Exit\n1)From File\n2)Enter Graph\n3)Print UIDs\n4)Test Eigenvectors\n"
-#define GRAPH_MENU "\n0)Main Menu\n1)New Node\n2)Add Friend\n3)Switch Node\n4)Print Nodes\n"
+#define MENU "\n0)Exit\n1)Graph From File\n2)User Graph\n"
+#define GRAPH_MENU "\n0)Main Menu\n1)New Node\n2)Add Friend\n3)Switch Node\n4)Print Nodes\n5)Print Friends\n"
 
 typedef enum{
     reading=0,

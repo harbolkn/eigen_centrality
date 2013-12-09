@@ -104,6 +104,11 @@ void multiply(int m, int p, int** A, int** B, int*** sim){
     *sim = res;
 }
 
+/*****
+*   Matrix Eponentiation
+*
+*   Raise a matrix size mxm to a given exponent 
+*/
 int** pow_matrix(int** matrix, int m, int pow){
     int i, j, **res;
     init_matrix(&res, m, m);

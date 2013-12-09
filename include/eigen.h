@@ -8,8 +8,15 @@
 
 #define LIM 10
 
+
+/*****
+*   Eigen Vectors
+*/
+
 // Eigenvector Centrality Calculator
 void eig_cent(float**, int**, int);
+
+// Print Eigenvalues (print float array)
 void print_eigen(float*, int);
 
 /*****

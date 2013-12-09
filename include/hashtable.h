@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define TABLESIZE 65536 
+#define TABLESIZE 65536 // Hash returns maximum 8 digit number 2^16
 
 #define rot(x,k) (((x)<<(k)) | ((x)>>(32-(k))))
 
@@ -32,7 +32,10 @@
 
 typedef unsigned int uint32_t;
 
+// Hash Function
 uint32_t lookup3(const void*, size_t, uint32_t);
+
+// Hash accessor function
 unsigned int string_hash(char*);
 
 #endif

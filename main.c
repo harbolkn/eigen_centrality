@@ -1,5 +1,7 @@
 #include "include/util.h"
 
+node* HEAD = NULL;
+
 int main(){
     int opt, m;
     int **uu, **ii, **interests, *uid;
@@ -23,37 +25,14 @@ int main(){
                 eig_cent(&eig, uu, m);
                 place_ad(eig, uid, m, num_ads());
                 break;
-            case 3:
-                printf("UIDs\n"); print_uid(uid, m); printf("\n");
-                break;
-            case 4:
-                m = 8;
-                int A[8][8] = {
-                    {0,1,1,1,0,0,0,0},
-                    {1,0,0,0,0,0,0,0},
-                    {1,0,0,0,0,0,0,0},
-                    {1,0,0,0,1,0,1,0},
-                    {0,0,0,1,0,1,0,0},
-                    {0,0,0,0,1,0,0,0},
-                    {0,0,0,1,0,0,0,1},
-                    {0,0,0,0,0,0,1,0},
-                        };
-
-                int **test; init_matrix(&test, m, m);
-
-                for(i=0; i<m; i++){
-                    for(j=0; j<m; j++)
-                        test[i][j] = A[i][j];
-                }
-
-                eig_cent(&eig, test, m);
-                break;
             default: printf("Invalid Menu Option\n");
         }
     }
 
     return 0;
 }
+
+
 
 /*****
 *   Print 1xm vector 
@@ -115,7 +94,10 @@ void similarity(int m, int** interests, int*** uu, int*** ii){
 */
 int from_file(int*** uu, int*** ii, int*** interests, int** uid){
     int m, i, j;
-    char* file_name = "../Data/socialgraph.tsv"; //make this user input
+
+    char* file_name = (char*)malloc(sizeof(char)*MAX_WORD); 
+    printf("File name: "); scanf("%s", file_name);
+
     FILE* fp;
     int **int_temp, *uid_temp;
 
@@ -148,7 +130,7 @@ int from_file(int*** uu, int*** ii, int*** interests, int** uid){
 */
 int build_graph(int*** uu, int*** ii, int*** interests, int** uid){
     int opt=0, m;
-    node *head=NULL, *cur=NULL, *ref=NULL, *parent=NULL;
+    node *head = NULL, *cur=NULL, *ref=NULL, *parent=NULL;
     char**  name;
 
     while(1){
@@ -157,19 +139,12 @@ int build_graph(int*** uu, int*** ii, int*** interests, int** uid){
 
         switch(opt){
             case 0: 
-                // Network Size
-                m = list_length(head);
+                m = list_length(head); // Network Size
+                to_array(head, uid); // UIDs
+                assign_interests(m, interests, END); // Interest Matrix
+                similarity(m, *interests, uu, ii); // Similarities
+                HEAD = head;
 
-                // UIDs
-                to_array(head, uid);
-
-                // Interests Matrix
-                assign_interests(m, interests, END);
-                
-                // Similiarities
-                similarity(m, *interests, uu, ii);
-
-                destroy_list(head); 
                 return m;
             case 1: // Add Node
                 ref = get_node();
@@ -204,6 +179,7 @@ int build_graph(int*** uu, int*** ii, int*** interests, int** uid){
                 break;
 
             case 5: // View Friends
+                printf("%s %s's Friends: \n", cur->name[0], cur->name[1]);
                 if(cur != NULL)
                     view_leaf(cur->root);
 

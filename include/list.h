@@ -56,7 +56,7 @@ void destroy_list(node*);
 
 
 /*****
-*   Viewing List
+*   Print Linked List 
 */
 void print_list(node*);
 

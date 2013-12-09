@@ -1,10 +1,15 @@
 #include "include/graph.h"
 
+
+/*****
+*   Find Graph Size from a File
+*
+*   Find the number of UIDs present in the a file
+*/
 int graph_size(FILE* fp, char* file_name){
     fp = fopen(file_name, "r");
 
     int m = 0;
-
     char* line = NULL;
     size_t len = 0;
     ssize_t read;
@@ -14,23 +19,25 @@ int graph_size(FILE* fp, char* file_name){
         exit(EXIT_FAILURE);
     }
     else{
-        while((read = getline(&line, &len, fp)) != -1){
+        while((read = getline(&line, &len, fp)) != -1)
             m++;
-        }
     }
 
     fclose(fp);
-
     return m;
 }
 
+
+/*****
+*   Read UIDs to an array
+*
+*   Return an array of UIDs in a file
+*/
 int* get_uid(FILE *fp, char* file_name, int m){
     fp = fopen(file_name, "r");
 
     int i = 0;
-
-    char* line = NULL;
-    char* subtoken;
+    char *line = NULL, *subtoken;
     size_t len = 0;
     ssize_t read;
 
@@ -52,6 +59,7 @@ int* get_uid(FILE *fp, char* file_name, int m){
     return ids;
 }
 
+
 /*****
 *   Giver interests to each user in the graph
 *
@@ -59,9 +67,8 @@ int* get_uid(FILE *fp, char* file_name, int m){
 *   Put into User X Interest matrix
 */
 void assign_interests(int m, int*** interests, int num){
-    int i, j, temp;
+    int i, j, temp, **array;
     int num_int = random()%5; // 0-5 interests per node
-    int** array;
     init_matrix(&array, m, num);
 
     for(i=0; i<m; i++){
@@ -76,6 +83,11 @@ void assign_interests(int m, int*** interests, int num){
 }
 
 
+/*****
+*   Search Array for a UID
+*
+*   Make sure a UID is in the UID array
+*/
 int search_array(int* uid, int size, int token){
     int i;
     for(i=0; i<size; i++){
@@ -84,6 +96,7 @@ int search_array(int* uid, int size, int token){
     }
     return INT_MIN;
 }
+
 
 /*****
 *   Depricated - Read Graph Edges from file
@@ -94,16 +107,13 @@ int search_array(int* uid, int size, int token){
 void read_edges(FILE* fp, char* file_name, int m, int* uid, int*** edges){
     fp = fopen(file_name, "r");
 
-    int i = 0, j = -2, place;
+    int i = 0, j = -2, place, **edge;
+    init_matrix(&edge, m, m);
 
     char *line = NULL, *subtoken;
     size_t len = 0;
     ssize_t read;
 
-    int** edge;
-    init_matrix(&edge, m, m);
-
-    i = 0;
     if( fp == NULL ){
         printf("Error: File not opened\n");
         exit(EXIT_FAILURE);
@@ -116,10 +126,8 @@ void read_edges(FILE* fp, char* file_name, int m, int* uid, int*** edges){
                 if( j >= 0 ){
                     place = search_array(uid, m, atoi(subtoken));
 
-                    if(place != INT_MIN){
-                        edge[i][place] = 1;
-                        edge[place][i] = 1;
-                    }
+                    if(place != INT_MIN)
+                        edge[i][place] = edge[place][i] = 1;
                 }
 
                 subtoken = strtok(NULL, " ");
